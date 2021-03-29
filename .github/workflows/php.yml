@@ -14,27 +14,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: PHP Version
-      run: php --version
-
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
+    - name: Set up composer & dependencies
+      uses: addnab/docker-run-action@v3
       with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+        image: phpdockerio/php74-cli
+        shell: bash
+        run: |
+          composer validate --strict
+          composer install --prefer-dist --no-suggest
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
-      with:
-        php-version: '7.4'
-      
     - name: Run tests
-      run: vendor/bin/phpunit
+      uses: addnab/docker-run-action@v3
       with:
-        php-version: '7.4'
+        image: phpdockerio/php74-cli
+        shell: bash
+        run: vendor/bin/phpunit
