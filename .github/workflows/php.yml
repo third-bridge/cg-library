@@ -14,22 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up composer & dependencies
-      run: docker run --rm -t -v "`pwd`:/workdir" -w /workdir phpdockerio/php74-cli bash -c "composer -validate --strict; composer -o install"
+    - name: Validate composer config
+      run: docker run --rm -t -v "`pwd`:/workdir" -w /workdir phpdockerio/php74-cli composer --validate --strict
+
+    - name: Install dependencies
+      run: docker run --rm -t -v "`pwd`:/workdir" -w /workdir phpdockerio/php74-cli composer install
 
     - name: Run tests
-      run: docker run --rm -t -v -t "`pwd`:/workdir" -w /workdir phpdockerio/php74-cli vendor/bin/phpunit
-
-#      uses: addnab/docker-run-action@v3
-#
-#      with:
-#        image: phpdockerio/php74-cli
-#        run: |
-#          composer validate --strict
-#          composer install
-#
-#    - name: Run tests
-#      uses: addnab/docker-run-action@v3
-#      with:
-#        image: phpdockerio/php74-cli
-#        run: vendor/bin/phpunit
+      run: docker run --rm -t -v "`pwd`:/workdir" -w /workdir phpdockerio/php74-cli vendor/bin/phpunit
