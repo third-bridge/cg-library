@@ -7,4 +7,4 @@ composer-install:
 	$(DOCKER_RUN) composer install
 
 run-tests:
-	$(DOCKER_RUN) vendor/bin/phpunit
+	$(DOCKER_RUN) vendor/bin/phpunit --testdox
