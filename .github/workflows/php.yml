@@ -18,14 +18,12 @@ jobs:
       uses: addnab/docker-run-action@v3
       with:
         image: phpdockerio/php74-cli
-        shell: bash
         run: |
           composer validate --strict
-          composer install --prefer-dist --no-suggest
+          composer install
 
     - name: Run tests
       uses: addnab/docker-run-action@v3
       with:
         image: phpdockerio/php74-cli
-        shell: bash
         run: vendor/bin/phpunit
