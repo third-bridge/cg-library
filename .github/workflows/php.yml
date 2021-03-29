@@ -1,0 +1,22 @@
+name: Code analysis
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer config
+      run: make composer-validate
+
+    - name: Install dependencies
+      run: make composer-install
+
+    - name: Run tests
+      run: make run-tests
