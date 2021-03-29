@@ -15,15 +15,18 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Set up composer & dependencies
-      uses: addnab/docker-run-action@v3
-      with:
-        image: phpdockerio/php74-cli
-        run: |
-          composer validate --strict
-          composer install
+      run: php --version
 
-    - name: Run tests
-      uses: addnab/docker-run-action@v3
-      with:
-        image: phpdockerio/php74-cli
-        run: vendor/bin/phpunit
+#      uses: addnab/docker-run-action@v3
+#
+#      with:
+#        image: phpdockerio/php74-cli
+#        run: |
+#          composer validate --strict
+#          composer install
+#
+#    - name: Run tests
+#      uses: addnab/docker-run-action@v3
+#      with:
+#        image: phpdockerio/php74-cli
+#        run: vendor/bin/phpunit
