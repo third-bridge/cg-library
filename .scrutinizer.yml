@@ -1,0 +1,28 @@
+checks:
+  php: true
+
+build:
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+
+    backend:
+      environment:
+        php:
+          version: '7.4'
+
+      tests:
+        override:
+          - command: vendor/bin/phpunit
+
+filter:
+  paths: ["tests/*", "src/*"]
+
+build_failure_conditions:
+  - 'issues.label("coding-style").new.count > 3'
+  - 'issues.severity(>= MAJOR).new.exists'
+  - 'project.metric("scrutinizer.quality", < 8.5)'
+  - 'project.metric("scrutinizer.test_coverage", < 0.13)'
+  - 'project.metric_change("scrutinizer.test_coverage", < -0.02)'
